@@ -141,7 +141,8 @@ MonoBehaviour:
   - {fileID: 797021613520861573, guid: f209aec7b48e1264781431e28c033c44, type: 3}
   - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
   player: {fileID: 0}
-  _lifePoints: 1
+  rb: {fileID: 0}
+  _lifePoints: 10
   _damage: 1
   _attackDelay: 0.5
   _range: 15
@@ -191,7 +192,7 @@ Rigidbody2D:
   m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 10
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5292f89bfa82a96469cdf8ed01dbd382, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0

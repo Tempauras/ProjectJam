@@ -46,6 +46,8 @@ public class BulletBhaviour : MonoBehaviour
 
         if (enemy)
         {
+            Vector2 bulletDirection = (transform.position - enemy.transform.position).normalized;
+            enemy.rb.AddForce(-direction * force * 100);
             enemy.Hit(damage);
             enabled = false;
         }
@@ -63,7 +65,6 @@ public class BulletBhaviour : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("BulletDisabled");
         GameManager.instance.AddToPool(TypeOfPool.PLAYERBULLET, gameObject);
         gameObject.SetActive(false);
     }

@@ -33,7 +33,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
         if ((transform.position - _startPos).magnitude > travelDistance)
         {
-            Destroy(gameObject);
+            enabled = false;
         }
     }
 
@@ -44,12 +44,13 @@ public class EnemyBulletBehaviour : MonoBehaviour
         if (player)
         {
             player.Hit(bulletSpeed);
+            enabled = false;
         }
         
         
         if (!col.GetComponent<EnemyBulletBehaviour>() && !col.gameObject.CompareTag("BoundingBox") && !col.GetComponent<BaseEnemy>())
         {
-            Destroy(gameObject);
+            enabled = false;
         }
         
     }
@@ -57,5 +58,11 @@ public class EnemyBulletBehaviour : MonoBehaviour
     public void SetDirection(Vector2 prmDirection)
     {
         _direction = prmDirection;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.AddToPool(TypeOfPool.ENEMYBULLET, gameObject);
+        gameObject.SetActive(false);
     }
 }

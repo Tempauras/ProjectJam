@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 4863374281814296182}
   - component: {fileID: 4863374281814296183}
   - component: {fileID: 4863374281814296181}
+  - component: {fileID: 7487596672982580480}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -129,12 +130,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41759ba48945f25408aef79f3dd9a6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _whatIsGround:
+    serializedVersion: 2
+    m_Bits: 448
   moveSpeed: 5
+  _rigidbody: {fileID: 0}
   camera: {fileID: 0}
-  projectile: {fileID: 6088906215925844011, guid: 8b8e37b458e1a9b438b0c713f0fc6422, type: 3}
   lifePoints: 10
   maxLifePoints: 10
   jumpHeight: 7
+  rateOfFire: 0.07
 --- !u!50 &4863374281814296182
 Rigidbody2D:
   serializedVersion: 4
@@ -143,7 +148,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4863374281814296186}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -151,7 +156,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5292f89bfa82a96469cdf8ed01dbd382, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -216,3 +221,18 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerAction
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7487596672982580480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4863374281814296186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6fc9a35bbed46c46a8dab6597d9be6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayToSpawn: 0
+  mobToSpawnsPerSeconds: 0
+  radiusForSpawn: 0

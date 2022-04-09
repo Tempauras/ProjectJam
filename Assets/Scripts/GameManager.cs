@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         EnemyPoolSize = 200;
         EnemyBulletPoolSize = 500;
-        PlayerBulletPoolSize = 50;
+        PlayerBulletPoolSize = 200;
         ExplosionPoolSize = 50;
         InitPool(EnemyPool, EnemyPoolSize, EnemyGO, EnemyParentGO);
         InitPool(EnemyBulletPool, EnemyBulletPoolSize, EnemyBulletGO, EnemyBulletParentGO);

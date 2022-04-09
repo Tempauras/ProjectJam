@@ -19,7 +19,6 @@ public class PlayerBehviour : MonoBehaviour
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
     public Camera camera;
-    public Object projectile;
     public int lifePoints;
     public int maxLifePoints;
     public int jumpHeight;

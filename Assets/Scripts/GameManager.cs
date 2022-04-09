@@ -53,19 +53,17 @@ public class GameManager : MonoBehaviour
         EnemyBulletPoolSize = 500;
         PlayerBulletPoolSize = 50;
         ExplosionPoolSize = 50;
-        Debug.Log("On start");
         InitPool(EnemyPool, EnemyPoolSize, EnemyGO, EnemyParentGO);
         InitPool(EnemyBulletPool, EnemyBulletPoolSize, EnemyBulletGO, EnemyBulletParentGO);
         InitPool(PlayerBulletPool, PlayerBulletPoolSize, PlayerBulletGO, PlayerBulletParentGO);
         InitPool(ExplosionPool, ExplosionPoolSize, ExplosionGO, ExplosionParentGO);
-        SpawnFromPool(TypeOfPool.ENEMY, transform);
+        Debug.Log(PlayerBulletPool.Count);
     }
 
     private void InitPool(Queue<GameObject> pool, int sizeOfPool, GameObject go, Transform transformParentGo)
     {
         for (int i = 0; i < sizeOfPool; i++)
         {
-            Debug.Log(i);
             GameObject clone = Instantiate(go, new Vector3(0, -150, 0), quaternion.identity, transformParentGo);
             clone.SetActive(false);
         }
@@ -77,11 +75,9 @@ public class GameManager : MonoBehaviour
         {
             case TypeOfPool.ENEMY :
                 EnemyPool.Enqueue(obj);
-                Debug.Log(EnemyPool.Count);
                 break;
             case TypeOfPool.ENEMYBULLET :
                 EnemyBulletPool.Enqueue(obj);
-                Debug.Log(EnemyBulletPool.Count);
                 break;
             case TypeOfPool.PLAYERBULLET :
                 PlayerBulletPool.Enqueue(obj);
@@ -89,7 +85,6 @@ public class GameManager : MonoBehaviour
                 break;
             case TypeOfPool.EXPLOSION :
                 ExplosionPool.Enqueue(obj);
-                Debug.Log(ExplosionPool.Count);
                 break;
         }
     }

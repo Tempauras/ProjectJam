@@ -50,11 +50,11 @@ MonoBehaviour:
   EnemyGO: {fileID: 7498987204164544462, guid: 5cad06ed1d29ee5449084a0e31242590, type: 3}
   EnemyBulletGO: {fileID: 274261955216309333, guid: 07b9a196d6139ca409c31220aa6e7872, type: 3}
   PlayerBulletGO: {fileID: 6088906215925844011, guid: 8b8e37b458e1a9b438b0c713f0fc6422, type: 3}
-  ExplosionGO: {fileID: 0}
-  EnemyParentGO: {fileID: 7647672330905777348}
-  EnemyBulletParentGO: {fileID: 6572808728488972224}
-  PlayerBulletParentGO: {fileID: 7476827306874324965}
-  ExplosionParentGO: {fileID: 5208010199561271084}
+  ExplosionGO: {fileID: 4041414418544672145, guid: e86e1d224a8dc3f4fb26feb4d364e0ac, type: 3}
+  EnemyParentGO: {fileID: 3107875062701147735}
+  EnemyBulletParentGO: {fileID: 9093455637104343638}
+  PlayerBulletParentGO: {fileID: 3818290248502014979}
+  ExplosionParentGO: {fileID: 3819065439338368391}
 --- !u!1 &5208010199561271084
 GameObject:
   m_ObjectHideFlags: 0

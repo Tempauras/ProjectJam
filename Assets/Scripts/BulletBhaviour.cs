@@ -43,6 +43,7 @@ public class BulletBhaviour : MonoBehaviour
         {
             enemy.Hit(damage);
         }
+        Destroy(gameObject);
         
     }
 

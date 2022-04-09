@@ -52,7 +52,8 @@ public class PlayerBehviour : MonoBehaviour
         BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();
 
         Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
-
+        
+        Debug.Log(destination);
         Vector2 direction =  destination - new Vector2(transform.position.x, transform.position.y);
         
         bullet.SetDirection(direction.normalized);

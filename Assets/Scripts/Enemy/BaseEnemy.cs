@@ -19,8 +19,8 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] private float _attackDelay;
     [SerializeField] private float _range;
     private float _nextAttack = 0.1f;
-    
-    
+
+    private Vector2 destination;
     
     // Start is called before the first frame update
     void Start()
@@ -28,11 +28,20 @@ public class BaseEnemy : MonoBehaviour
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
         _aiPath = GetComponent<AIPath>();
+        
+        destination = target.position;
+        float lookAngle = Mathf.Atan2(destination.y, destination.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, lookAngle);
     }
 
     // Update is called once per frame
     void Update()
     {
+        destination = target.position;
+        float lookAngle = Mathf.Atan2(destination.y, destination.x) * Mathf.Rad2Deg;
+        
+        transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+        
         if (transform.localPosition.x - target.localPosition.x <= _range && 
             transform.localPosition.y - target.localPosition.y <= _range &&
             Time.time > _nextAttack)
@@ -40,20 +49,12 @@ public class BaseEnemy : MonoBehaviour
             Attack();
         }
         
-        if (_aiPath.desiredVelocity.x >= 0.01f)
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-        } else if (_aiPath.desiredVelocity.x <= -0.01f)
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-        }
+       // transform.LookAt(target, transform.right);
     }
 
     public void Attack()
     {
         Debug.Log("Attacking at : " + target.localPosition.x + ", " + target.localPosition.y + " !");
-        Vector2 destination = target.position;
-        
         GameObject projectileGameObject = (GameObject)Instantiate(_bullet, transform.position, transform.rotation);
         BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();
         
@@ -76,5 +77,6 @@ public class BaseEnemy : MonoBehaviour
     public void Death()
     {
         Debug.Log("Enemy Death");
+        //Destroy(gameObject);
     }
 }

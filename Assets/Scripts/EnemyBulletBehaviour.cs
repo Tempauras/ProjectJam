@@ -3,56 +3,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBhaviour : MonoBehaviour
+public class EnemyBulletBehaviour : MonoBehaviour
 {
-
     public int damage;
-    public int force;
-    
-    public int travelDistance;
+    public int bulletSpeed;
 
+    public int travelDistance;
+    
     private Rigidbody2D _rigidbody2D;
     
-    private Vector2 direction;
-    private Vector3 StartPos;
+    private Vector2 _direction;
+    private Vector3 _startPos;
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        StartPos = transform.position;
-
+        _startPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _rigidbody2D.velocity = direction * force;
+        _rigidbody2D.velocity = _direction * bulletSpeed;
 
-        if ((transform.position - StartPos).magnitude > travelDistance)
+        if ((transform.position - _startPos).magnitude > travelDistance)
         {
             Destroy(gameObject);
         }
-        
-        
     }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
-        BaseEnemy enemy = col.GetComponent<BaseEnemy>();
+        PlayerBehviour player = col.GetComponent<PlayerBehviour>();
 
-        if (enemy)
+        if (player)
         {
-            enemy.Hit(damage);
+            player.Hit(bulletSpeed);
+        }
+        
+        
+        if (!col.GetComponent<EnemyBulletBehaviour>())
+        {
             Destroy(gameObject);
         }
-
-        if (!col.GetComponent<PlayerBehviour>())
-        {
-            Destroy(gameObject);
-        }
+        
     }
 
     public void SetDirection(Vector2 prmDirection)
     {
-        direction = prmDirection;
+        _direction = prmDirection;
     }
 }

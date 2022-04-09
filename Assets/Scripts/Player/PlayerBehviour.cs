@@ -62,8 +62,10 @@ public class PlayerBehviour : MonoBehaviour
 
     public void OnShoot()
     {
-        GameObject projectileGameObject = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+        GameObject projectileGameObject = GameManager.instance.SpawnFromPool(TypeOfPool.PLAYERBULLET, transform);
+        projectileGameObject.SetActive(true);
         BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();
+        bullet.enabled = true;
 
         Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
         

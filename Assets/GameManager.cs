@@ -15,10 +15,16 @@ public enum TypeOfPool
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
     public GameObject EnemyGO;
     public GameObject EnemyBulletGO;
     public GameObject PlayerBulletGO;
     public GameObject ExplosionGO;
+    
+    public Transform EnemyParentGO;
+    public Transform EnemyBulletParentGO;
+    public Transform PlayerBulletParentGO;
+    public Transform ExplosionParentGO;
 
     private Queue<GameObject> EnemyPool = new Queue<GameObject>();
     private int EnemyPoolSize;
@@ -48,16 +54,19 @@ public class GameManager : MonoBehaviour
         PlayerBulletPoolSize = 50;
         ExplosionPoolSize = 50;
         Debug.Log("On start");
-        InitPool(EnemyPool, EnemyPoolSize);
+        InitPool(EnemyPool, EnemyPoolSize, EnemyGO, EnemyParentGO);
+        InitPool(EnemyBulletPool, EnemyBulletPoolSize, EnemyBulletGO, EnemyBulletParentGO);
+        InitPool(PlayerBulletPool, PlayerBulletPoolSize, PlayerBulletGO, PlayerBulletParentGO);
+        InitPool(ExplosionPool, ExplosionPoolSize, ExplosionGO, ExplosionParentGO);
         SpawnFromPool(TypeOfPool.ENEMY, transform);
     }
 
-    private void InitPool(Queue<GameObject> pool, int sizeOfPool)
+    private void InitPool(Queue<GameObject> pool, int sizeOfPool, GameObject go, Transform transformParentGo)
     {
         for (int i = 0; i < sizeOfPool; i++)
         {
             Debug.Log(i);
-            GameObject clone = Instantiate(EnemyGO, new Vector3(0, -150, 0), quaternion.identity);
+            GameObject clone = Instantiate(go, new Vector3(0, -150, 0), quaternion.identity, transformParentGo);
             clone.SetActive(false);
         }
     }
@@ -68,35 +77,41 @@ public class GameManager : MonoBehaviour
         {
             case TypeOfPool.ENEMY :
                 EnemyPool.Enqueue(obj);
+                Debug.Log(EnemyPool.Count);
                 break;
             case TypeOfPool.ENEMYBULLET :
                 EnemyBulletPool.Enqueue(obj);
+                Debug.Log(EnemyBulletPool.Count);
                 break;
             case TypeOfPool.PLAYERBULLET :
                 PlayerBulletPool.Enqueue(obj);
+                Debug.Log(PlayerBulletPool.Count);
                 break;
             case TypeOfPool.EXPLOSION :
                 ExplosionPool.Enqueue(obj);
+                Debug.Log(ExplosionPool.Count);
                 break;
         }
     }
 
-    public void SpawnFromPool(TypeOfPool typeOfPool, Transform transform)
+    public GameObject SpawnFromPool(TypeOfPool typeOfPool, Transform newTransform)
     {
+        GameObject obj = null;
         switch (typeOfPool)
         {
             case TypeOfPool.ENEMY :
-                GameObject obj = EnemyPool.Dequeue();
-                obj.transform.position = transform.position;
-                obj.SetActive(true);
-                obj.GetComponent<BaseEnemy>().enabled = true;
+                obj = EnemyPool.Dequeue();
                 break;
             case TypeOfPool.ENEMYBULLET :
                 break;
             case TypeOfPool.PLAYERBULLET :
+                obj = PlayerBulletPool.Dequeue();
                 break;
             case TypeOfPool.EXPLOSION :
                 break;
         }
+        obj.transform.position = newTransform.position;
+        obj.transform.rotation = newTransform.rotation;
+        return obj;
     }
 }

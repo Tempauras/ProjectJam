@@ -41,7 +41,14 @@ public class BaseEnemy : MonoBehaviour
     public void Attack()
     {
         Debug.Log("Attacking at : " + target.localPosition.x + ", " + target.localPosition.y + " !");
-        Instantiate(_bullet, transform.position, transform.rotation, transform);
+        GameObject projectileGameObject = (GameObject)Instantiate(_bullet, transform.position, transform.rotation);
+        BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();
+        
+        Vector2 destination = target.position;
+        Vector2 direction =  destination - new Vector2(transform.position.x, transform.position.y);
+        bullet.SetDirection(direction.normalized);
+        float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
         _nextAttack = Time.time + _attackDelay;
     }
 

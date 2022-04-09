@@ -4,15 +4,16 @@ using System.Net.Http.Headers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerBehviour : MonoBehaviour
 {
-    
+    [SerializeField] LayerMask _whatIsGround;
     public int moveSpeed;
     
-    private Rigidbody2D _rigidbody;
-    private float _xAxis;
-    private bool jump = false;
+    public Rigidbody2D _rigidbody;
+    private float xAxis;
+    private bool canJump = false;
 
     public Camera camera;
     public Object projectile;
@@ -24,28 +25,25 @@ public class PlayerBehviour : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _xAxis = 0;
+        xAxis = 0;
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_xAxis != 0)
+        if (xAxis != 0)
         {
-            _rigidbody.velocity = new Vector2(_xAxis * moveSpeed, _rigidbody.velocity.y);
+            _rigidbody.velocity = new Vector2(xAxis * moveSpeed, _rigidbody.velocity.y);
         }
 
-        if (_xAxis == 0)
+        if (xAxis == 0)
         {
             _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         }
 
-        if (_rigidbody.velocity.y == 0)
-        {
-            jump = false;
-        }
-        
+        canJump = Mathf.Abs(_rigidbody.velocity.y) < 0.01f && _rigidbody.IsTouchingLayers(_whatIsGround);
+
         // if (Input.GetButtonDown("Jump"))
         // {
         //     Debug.Log("Jump");
@@ -54,12 +52,12 @@ public class PlayerBehviour : MonoBehaviour
         //     Debug.Log(_rigidbody.velocity);
         // }
 
-        
+
     }
 
     public void OnMovement(InputValue prmInputValue)
     {
-        _xAxis = prmInputValue.Get<float>();
+        xAxis = prmInputValue.Get<float>();
     }
 
     public void OnShoot()
@@ -83,11 +81,10 @@ public class PlayerBehviour : MonoBehaviour
 
     public void OnJump()
     {
-        if (!jump)
+        if (canJump)
         {
             Debug.Log("JUMP");
             _rigidbody.AddForce(new Vector2(_rigidbody.velocity.x, jumpHeight), ForceMode2D.Impulse);
-            jump = true;
         }
     }
     public void Hit(int prmDamage)

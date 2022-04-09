@@ -45,8 +45,9 @@ public class BulletBhaviour : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (!col.GetComponent<PlayerBehviour>())
+        if (!col.GetComponent<PlayerBehviour>() && !col.gameObject.CompareTag("BoundingBox"))
         {
+            Debug.Log("Destroyed");
             Destroy(gameObject);
         }
     }

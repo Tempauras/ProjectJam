@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3892322492904290124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.638, y: -0, z: 0}
+  m_LocalPosition: {x: 0.731, y: -0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 7498987204164544459}
@@ -91,13 +91,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498987204164544459}
+  - component: {fileID: 8464797700259311897}
   - component: {fileID: 7498987204164544460}
   - component: {fileID: 7498987204164544461}
   - component: {fileID: 7498987204164544458}
   - component: {fileID: 7498987204164544457}
   - component: {fileID: 7498987204164544456}
   - component: {fileID: 6482961300760710004}
-  - component: {fileID: 8464797700259311897}
+  - component: {fileID: 477365856}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -112,14 +113,34 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7498987204164544462}
-  m_LocalRotation: {x: 0, y: 0, z: -0.0073303473, w: 0.9999731}
-  m_LocalPosition: {x: 8.43, y: -3.44, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3363962455374365066}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.84}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8464797700259311897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498987204164544462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba307a76073716c41ad7d6d226cff078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 3892322492904290124}
+  player: {fileID: 0}
+  _lifePoints: 2
+  _damage: 1
+  _attackDelay: 0.5
+  _range: 15
+  _moveSpeed: 6
+  _bullet: {fileID: 274261955216309333, guid: 07b9a196d6139ca409c31220aa6e7872, type: 3}
 --- !u!114 &7498987204164544460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +189,7 @@ MonoBehaviour:
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   centerOffsetCompatibility: NaN
   repathRateCompatibility: NaN
   canSearchCompability: 0
@@ -186,9 +207,9 @@ MonoBehaviour:
   slowdownDistance: 0.6
   pickNextWaypointDist: 1.2
   endReachedDistance: 0.2
-  alwaysDrawGizmos: 0
+  alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
+  whenCloseToDestination: 1
   constrainInsideGraph: 0
 --- !u!58 &7498987204164544458
 CircleCollider2D:
@@ -200,7 +221,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -218,15 +239,15 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 30
-  m_LinearDrag: 0
+  m_Mass: 1
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 9.81
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 6
 --- !u!114 &7498987204164544456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +255,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7498987204164544462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
   m_Name: 
@@ -292,7 +313,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8464797700259311897
+--- !u!114 &477365856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,13 +322,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7498987204164544462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba307a76073716c41ad7d6d226cff078, type: 3}
+  m_Script: {fileID: 11500000, guid: 22e6c29e32504465faa943c537d8029b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 3892322492904290124}
-  target: {fileID: 0}
-  _bullet: {fileID: 6088906215925844011, guid: 8b8e37b458e1a9b438b0c713f0fc6422, type: 3}
-  _lifePoints: 0
-  _damage: 0
-  _attackDelay: 2
-  _range: 3
+  version: 1
+  targets:
+  - {fileID: 0}
+  - {fileID: 0}
+  delay: 0

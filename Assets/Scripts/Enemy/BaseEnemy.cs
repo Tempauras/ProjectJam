@@ -7,61 +7,103 @@ using UnityEngine.AI;
 public class BaseEnemy : MonoBehaviour
 {
     public GameObject firePoint;
-    #region AI stuff
-    public Transform target;
+    [Header("AI Stuff")]
+
+    public Transform player;
     private Seeker _seeker;
     private Rigidbody2D _rb;
+    private AIDestinationSetter _aiDestinationSetter;
+    private Patrol _patrol;
     private AIPath _aiPath;
-    #endregion
-    [SerializeField] private Object _bullet;
+    [Header("Stats")]
     [SerializeField] private float _lifePoints;
-    [SerializeField] private float _damage;
+    [SerializeField] private int _damage;
     [SerializeField] private float _attackDelay;
-    [SerializeField] private float _range;
-    private float _nextAttack = 0.1f;
+    [SerializeField] private int _range;
+    [SerializeField] private int _moveSpeed;
+    private float _nextAttack = 0.2f;
 
-    private Vector2 destination;
-    
+    private bool _shooting = false;
+    [SerializeField] private Object _bullet;
+
+    private Vector2 direction;
     // Start is called before the first frame update
     void Start()
     {
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
+        _aiDestinationSetter = GetComponent<AIDestinationSetter>();
         _aiPath = GetComponent<AIPath>();
-        
-        destination = target.position;
-        float lookAngle = Mathf.Atan2(destination.y, destination.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+        _patrol = GetComponent<Patrol>();
+        _aiPath.maxSpeed = _moveSpeed;
+        InvokeRepeating("SeePlayer", 0f, 0.1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        destination = target.position;
-        float lookAngle = Mathf.Atan2(destination.y, destination.x) * Mathf.Rad2Deg;
-        
-        transform.rotation = Quaternion.Euler(0, 0, lookAngle);
-        
-        if (transform.localPosition.x - target.localPosition.x <= _range && 
-            transform.localPosition.y - target.localPosition.y <= _range &&
-            Time.time > _nextAttack)
+        float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(Vector3.forward * lookAngle);
+        Debug.Log(_shooting);
+        if (_shooting)
         {
-            Attack();
+           
+            if (transform.localPosition.x - player.localPosition.x <= _range && 
+                transform.localPosition.y - player.localPosition.y <= _range &&
+                Time.time > _nextAttack)
+            {
+                Attack();
+            }
         }
-        
-       // transform.LookAt(target, transform.right);
+    }
+
+    public void SeePlayer()
+    {
+        direction = (player.position - transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(firePoint.transform.position, direction, 1000);
+        Debug.DrawRay(firePoint.transform.position, direction, Color.blue, 1.0f);
+        if (hit.collider == player.GetComponent<BoxCollider2D>())
+        {
+            ChasePlayer();
+        }
+        else
+        {
+            Patrol();
+        }
+    }
+
+    public void ChasePlayer()
+    {
+        _aiDestinationSetter.enabled = true;
+        _patrol.enabled = false;
+        //Debug.Log("Seeing Player");
+        _shooting = true;
+    }
+
+    public void Patrol()
+    {
+        _aiDestinationSetter.enabled = false;
+        _patrol.enabled = true;
+        _shooting = false;
+
     }
 
     public void Attack()
     {
-        Debug.Log("Attacking at : " + target.localPosition.x + ", " + target.localPosition.y + " !");
-        GameObject projectileGameObject = (GameObject)Instantiate(_bullet, transform.position, transform.rotation);
-        BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();
+        //Debug.Log("Attacking at : " + player.localPosition.x + ", " + player.localPosition.y + " !");
+        GameObject projectileGameObject = (GameObject)Instantiate(_bullet, firePoint.transform.position, firePoint.transform.rotation);
+        EnemyBulletBehaviour bullet = projectileGameObject.GetComponent<EnemyBulletBehaviour>();
         
-        Vector2 direction =  destination - new Vector2(transform.position.x, transform.position.y);
-        bullet.SetDirection(direction.normalized);
+        bullet.bulletSpeed = 10;
+        bullet.travelDistance = _range;
+        bullet.damage = _damage;
+        
+        Vector2 destination = player.position;
+
+        bullet.SetDirection(direction);
         float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+        
         _nextAttack = Time.time + _attackDelay;
     }
 
@@ -77,6 +119,6 @@ public class BaseEnemy : MonoBehaviour
     public void Death()
     {
         Debug.Log("Enemy Death");
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

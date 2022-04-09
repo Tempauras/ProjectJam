@@ -50,24 +50,14 @@ public class BaseEnemy : MonoBehaviour
         direction = (player.transform.position - transform.position).normalized;
         if (direction.x <= 0 )
         {
-            // transform.right = Vector2.left;
             transform.localScale = new Vector3(-1f, 1f, 1f);
-            //arms.GetComponent<SpriteRenderer>().flipY = true;
-            //arms.GetComponent<SpriteRenderer>().flipX = true;
             arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, -90) * direction);
         }
         else
         {
-            // transform.right = Vector2.right;
             transform.localScale = new Vector3(1f, 1f, 1f);
-            //arms.GetComponent<SpriteRenderer>().flipY = false;
-            //arms.GetComponent<SpriteRenderer>().flipX = false;
             arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
         }
-        // float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //arms.transform.rotation = Quaternion.Euler(Vector3.forward * lookAngle);
-        // arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
-        Debug.Log(_shooting);
         if (_shooting)
         {
            
@@ -89,26 +79,11 @@ public class BaseEnemy : MonoBehaviour
         {
             ChasePlayer();
         }
-        else
-        {
-            Patrol();
-        }
     }
 
     public void ChasePlayer()
     {
-        _aiDestinationSetter.enabled = true;
-        _patrol.enabled = false;
-        //Debug.Log("Seeing Player");
         _shooting = true;
-    }
-
-    public void Patrol()
-    {
-        _aiDestinationSetter.enabled = false;
-        _patrol.enabled = true;
-        _shooting = false;
-
     }
 
     public void Attack()

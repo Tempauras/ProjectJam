@@ -42,8 +42,6 @@ public class BaseEnemy : MonoBehaviour
     void Update()
     {
         direction = (player.transform.position - transform.position).normalized;
-        Debug.Log(direction);
-        Debug.Log(_moveSpeed);
         _rb.velocity = new Vector2(direction.x * _moveSpeed, _rb.velocity.y);
         if (direction.x <= 0 )
         {

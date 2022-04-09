@@ -42,18 +42,23 @@ public class BulletBhaviour : MonoBehaviour
         if (enemy)
         {
             enemy.Hit(damage);
-            Destroy(gameObject);
+            enabled = false;
         }
 
         if (!col.GetComponent<PlayerBehviour>() && !col.gameObject.CompareTag("BoundingBox"))
         {
-            Debug.Log("Destroyed");
-            Destroy(gameObject);
+            enabled = false;
         }
     }
 
     public void SetDirection(Vector2 prmDirection)
     {
         direction = prmDirection;
+    }
+
+    private void OnDisable()
+    {
+        gameObject.SetActive(false);
+        GameManager.instance.AddToPool(TypeOfPool.PLAYERBULLET, gameObject);
     }
 }

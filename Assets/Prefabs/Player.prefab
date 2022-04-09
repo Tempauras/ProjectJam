@@ -130,6 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  camera: {fileID: 0}
+  projectile: {fileID: 6088906215925844011, guid: 8b8e37b458e1a9b438b0c713f0fc6422, type: 3}
+  lifePoints: 10
+  maxLifePoints: 10
 --- !u!50 &4863374281814296182
 Rigidbody2D:
   serializedVersion: 4

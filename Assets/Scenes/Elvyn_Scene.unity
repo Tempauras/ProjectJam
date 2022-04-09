@@ -339,6 +339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8464797700259311897, guid: 5cad06ed1d29ee5449084a0e31242590, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1718358823}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cad06ed1d29ee5449084a0e31242590, type: 3}
 --- !u!4 &1718358823 stripped
@@ -520,18 +524,6 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1950514906}
-    - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: lifePoints
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: projectile
-      value: 
-      objectReference: {fileID: 6088906215925844011, guid: 8b8e37b458e1a9b438b0c713f0fc6422, type: 3}
-    - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: maxLifePoints
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4863374281814296186, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
       propertyPath: m_Name
       value: Player

@@ -42,7 +42,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
         }
         
         
-        if (!col.GetComponent<EnemyBulletBehaviour>())
+        if (!col.GetComponent<EnemyBulletBehaviour>() && !col.gameObject.CompareTag("BoundingBox"))
         {
             Destroy(gameObject);
         }

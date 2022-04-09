@@ -16,7 +16,6 @@ public class PlayerBehviour : MonoBehaviour
     private bool canJump = false;
 
     public Camera camera;
-    public Object projectile;
     public int lifePoints;
     public int maxLifePoints;
     public int jumpHeight;

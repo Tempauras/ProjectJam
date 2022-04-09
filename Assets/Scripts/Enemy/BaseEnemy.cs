@@ -111,11 +111,11 @@ public class BaseEnemy : MonoBehaviour
     public void Death()
     {
         this.enabled = false;
-        gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
         GameManager.instance.AddToPool(TypeOfPool.ENEMY, gameObject);
+        gameObject.SetActive(false);
     }
 }

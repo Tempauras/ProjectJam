@@ -30,7 +30,7 @@ public class BulletBhaviour : MonoBehaviour
 
         if ((transform.position - StartPos).magnitude > travelDistance)
         {
-            Destroy(gameObject);
+            enabled = false;
         }
         
         
@@ -58,7 +58,8 @@ public class BulletBhaviour : MonoBehaviour
 
     private void OnDisable()
     {
-        gameObject.SetActive(false);
+        Debug.Log("BulletDisabled");
         GameManager.instance.AddToPool(TypeOfPool.PLAYERBULLET, gameObject);
+        gameObject.SetActive(false);
     }
 }

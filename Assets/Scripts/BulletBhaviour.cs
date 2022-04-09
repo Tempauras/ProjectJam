@@ -23,6 +23,11 @@ public class BulletBhaviour : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        StartPos = transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -45,7 +50,7 @@ public class BulletBhaviour : MonoBehaviour
             enabled = false;
         }
 
-        if (!col.GetComponent<PlayerBehviour>() && !col.gameObject.CompareTag("BoundingBox"))
+        if (!col.GetComponent<PlayerBehviour>() && !col.gameObject.CompareTag("BoundingBox") && !col.GetComponent<BulletBhaviour>())
         {
             enabled = false;
         }

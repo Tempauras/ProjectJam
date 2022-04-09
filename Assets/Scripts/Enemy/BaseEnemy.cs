@@ -63,6 +63,11 @@ public class BaseEnemy : MonoBehaviour
                 Attack();
             }
         }
+
+        if (transform.position.y <= -5)
+        {
+            enabled = false;
+        }
     }
 
     public void SeePlayer()

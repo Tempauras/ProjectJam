@@ -21,6 +21,11 @@ public class EnemyBulletBehaviour : MonoBehaviour
         _startPos = transform.position;
     }
 
+    private void OnEnable()
+    {
+        _startPos = transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -42,7 +47,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
         }
         
         
-        if (!col.GetComponent<EnemyBulletBehaviour>() && !col.gameObject.CompareTag("BoundingBox"))
+        if (!col.GetComponent<EnemyBulletBehaviour>() && !col.gameObject.CompareTag("BoundingBox") && !col.GetComponent<BaseEnemy>())
         {
             Destroy(gameObject);
         }

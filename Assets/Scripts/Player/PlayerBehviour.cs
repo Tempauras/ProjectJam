@@ -61,6 +61,8 @@ public class PlayerBehviour : MonoBehaviour
 
     public void OnShoot()
     {
+        Debug.Log(transform.position);
+        Debug.Log(transform.rotation);
         GameObject projectileGameObject = GameManager.instance.SpawnFromPool(TypeOfPool.PLAYERBULLET, transform);
         projectileGameObject.SetActive(true);
         BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();

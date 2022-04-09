@@ -13,9 +13,8 @@ public class PlayerBehviour : MonoBehaviour
     
     private float xAxis;
     private bool canJump = false;
-    private bool isShooting = false;
-    
-    
+
+
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
     public Camera camera;
@@ -59,11 +58,16 @@ public class PlayerBehviour : MonoBehaviour
 
         if (prmValue.isPressed)
         {
-            InvokeRepeating("Shoot", 0f, rateOfFire);
+            InvokeRepeating(nameof(Shoot), 0f, rateOfFire);
         }
         else
         {
-            CancelInvoke();
+            Debug.Log("cancel");
+            if (IsInvoking())
+            {
+                CancelInvoke();
+            }
+            
         }
     }
 
@@ -76,10 +80,11 @@ public class PlayerBehviour : MonoBehaviour
         bullet.enabled = true;
 
         Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
-
-        //Debug.Log(destination);
+        
         Vector2 direction = destination - new Vector2(transform.position.x, transform.position.y);
 
+        direction += new Vector2(Random.Range(-0.7f, 0.7f), Random.Range(-0.7f, 0.7f));
+        
         bullet.SetDirection(direction.normalized);
 
         float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

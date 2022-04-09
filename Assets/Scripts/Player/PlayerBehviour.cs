@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,40 +11,55 @@ public class PlayerBehviour : MonoBehaviour
     public int moveSpeed;
     
     private Rigidbody2D _rigidbody;
-    private Vector2 _xzAxis;
+    private float _xAxis;
+    private bool jump = false;
 
     public Camera camera;
     public Object projectile;
     public int lifePoints;
     public int maxLifePoints;
+    public int jumpHeight;
     
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _xzAxis = Vector2.zero;
+        _xAxis = 0;
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (_xzAxis.magnitude != 0)
+        if (_xAxis != 0)
         {
-            _rigidbody.velocity = _xzAxis * moveSpeed;
+            _rigidbody.velocity = new Vector2(_xAxis * moveSpeed, _rigidbody.velocity.y);
         }
 
-        if (_xzAxis.magnitude == 0)
+        if (_xAxis == 0)
         {
-            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
+        }
+
+        if (_rigidbody.velocity.y == 0)
+        {
+            jump = false;
         }
         
+        // if (Input.GetButtonDown("Jump"))
+        // {
+        //     Debug.Log("Jump");
+        //    
+        //     _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y + jumpHeight);
+        //     Debug.Log(_rigidbody.velocity);
+        // }
+
         
     }
 
     public void OnMovement(InputValue prmInputValue)
     {
-        _xzAxis = prmInputValue.Get<Vector2>();
+        _xAxis = prmInputValue.Get<float>();
     }
 
     public void OnShoot()
@@ -65,6 +81,15 @@ public class PlayerBehviour : MonoBehaviour
 
     }
 
+    public void OnJump()
+    {
+        if (!jump)
+        {
+            Debug.Log("JUMP");
+            _rigidbody.AddForce(new Vector2(_rigidbody.velocity.x, jumpHeight), ForceMode2D.Impulse);
+            jump = true;
+        }
+    }
     public void Hit(int prmDamage)
     {
         lifePoints -= prmDamage;

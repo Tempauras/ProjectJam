@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
   m_Color: {r: 0, g: 0.286582, b: 1, a: 1}
   m_FlipX: 0
@@ -134,6 +134,7 @@ MonoBehaviour:
   projectile: {fileID: 6088906215925844011, guid: 8b8e37b458e1a9b438b0c713f0fc6422, type: 3}
   lifePoints: 10
   maxLifePoints: 10
+  jumpHeight: 0
 --- !u!50 &4863374281814296182
 Rigidbody2D:
   serializedVersion: 4

@@ -1,18 +1,20 @@
+using System;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class BaseEnemy : MonoBehaviour
 {
     public GameObject firePoint;
+    public GameObject arms;
+    public Sprite[] enemySprite;
+    public Sprite[] enemyArmsSprite;
     [Header("AI Stuff")]
 
-    public Transform player;
-    private Seeker _seeker;
+    public GameObject player;
     private Rigidbody2D _rb;
-    private AIDestinationSetter _aiDestinationSetter;
-    private Patrol _patrol;
-    private AIPath _aiPath;
     [Header("Stats")]
     [SerializeField] private float _lifePoints;
     [SerializeField] private int _damage;
@@ -28,26 +30,36 @@ public class BaseEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _seeker = GetComponent<Seeker>();
+        int random = Random.Range(0, enemySprite.Length - 1);
+        GetComponent<SpriteRenderer>().sprite = enemySprite[random];
+        arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
+        player = GameObject.FindGameObjectWithTag("Player");
         _rb = GetComponent<Rigidbody2D>();
-        _aiDestinationSetter = GetComponent<AIDestinationSetter>();
-        _aiPath = GetComponent<AIPath>();
-        _patrol = GetComponent<Patrol>();
-        _aiPath.maxSpeed = _moveSpeed;
         InvokeRepeating("SeePlayer", 0f, 0.1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * lookAngle);
-        Debug.Log(_shooting);
+        direction = (player.transform.position - transform.position).normalized;
+        Debug.Log(direction);
+        Debug.Log(_moveSpeed);
+        _rb.velocity = new Vector2(direction.x * _moveSpeed, _rb.velocity.y);
+        if (direction.x <= 0 )
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, -90) * direction);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
+        }
         if (_shooting)
         {
            
-            if (transform.localPosition.x - player.localPosition.x <= _range && 
-                transform.localPosition.y - player.localPosition.y <= _range &&
+            if (transform.localPosition.x - player.transform.localPosition.x <= _range && 
+                transform.localPosition.y - player.transform.localPosition.y <= _range &&
                 Time.time > _nextAttack)
             {
                 Attack();
@@ -57,38 +69,22 @@ public class BaseEnemy : MonoBehaviour
 
     public void SeePlayer()
     {
-        direction = (player.position - transform.position).normalized;
+        
         RaycastHit2D hit = Physics2D.Raycast(firePoint.transform.position, direction, 1000);
         Debug.DrawRay(firePoint.transform.position, direction, Color.blue, 1.0f);
         if (hit.collider == player.GetComponent<BoxCollider2D>())
         {
             ChasePlayer();
         }
-        else
-        {
-            Patrol();
-        }
     }
 
     public void ChasePlayer()
     {
-        _aiDestinationSetter.enabled = true;
-        _patrol.enabled = false;
-        //Debug.Log("Seeing Player");
         _shooting = true;
-    }
-
-    public void Patrol()
-    {
-        _aiDestinationSetter.enabled = false;
-        _patrol.enabled = true;
-        _shooting = false;
-
     }
 
     public void Attack()
     {
-        //Debug.Log("Attacking at : " + player.localPosition.x + ", " + player.localPosition.y + " !");
         GameObject projectileGameObject = (GameObject)Instantiate(_bullet, firePoint.transform.position, firePoint.transform.rotation);
         EnemyBulletBehaviour bullet = projectileGameObject.GetComponent<EnemyBulletBehaviour>();
         
@@ -96,7 +92,7 @@ public class BaseEnemy : MonoBehaviour
         bullet.travelDistance = _range;
         bullet.damage = _damage;
         
-        Vector2 destination = player.position;
+        Vector2 destination = player.transform.position;
 
         bullet.SetDirection(direction);
         float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -116,7 +112,12 @@ public class BaseEnemy : MonoBehaviour
 
     public void Death()
     {
-        Debug.Log("Enemy Death");
-        Destroy(gameObject);
+        this.enabled = false;
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.AddToPool(TypeOfPool.ENEMY, gameObject);
     }
 }

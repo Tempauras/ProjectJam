@@ -6,76 +6,56 @@ using UnityEngine.AI;
 
 public class BaseEnemy : MonoBehaviour
 {
-    //Attribute
-
     #region AI stuff
-    [SerializeField] private Transform _target;
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _nextWaypointDistance = 3.0f;
-
-    private Path _path;
-    private int _currentWaypoint = 0;
-    private bool _reachedEndOfPath = false;
-
+    public Transform target;
     private Seeker _seeker;
     private Rigidbody2D _rb;
     #endregion
-    
-    
-    [SerializeField] private float _health;
-
+    [SerializeField] private Object _bullet;
+    [SerializeField] private float _lifePoints;
     [SerializeField] private float _damage;
-
-    
-
-    [SerializeField] private float _attackSpeed;
-
+    [SerializeField] private float _attackDelay;
     [SerializeField] private float _range;
+
+
+    private float _nextAttack = 0.1f;
     
-    private NavMeshAgent _agent;
     // Start is called before the first frame update
     void Start()
     {
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
-
-        _seeker.StartPath(_rb.position, _target.position, OnPathComplete);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_path == null)
-            return;
-
-        if (_currentWaypoint >= _path.vectorPath.Count)
+        if (transform.localPosition.x - target.localPosition.x <= _range && 
+            transform.localPosition.y - target.localPosition.y <= _range &&
+            Time.time > _nextAttack)
         {
-            _reachedEndOfPath = true;
-            return;
-        } else
-        {
-            _reachedEndOfPath = false;
-        }
-
-        Vector2 direction = ((Vector2) _path.vectorPath[_currentWaypoint] - _rb.position).normalized;
-        Vector2 force = direction * (_moveSpeed * Time.deltaTime);
-
-        _rb.AddForce(force);
-        
-        float distance = Vector2.Distance(_rb.position, _path.vectorPath[_currentWaypoint]);
-
-        if (distance < _nextWaypointDistance)
-        {
-            _currentWaypoint++;
+            Attack();
         }
     }
 
-    void OnPathComplete(Path p)
+    public void Attack()
     {
-        if (!p.error)
+        Debug.Log("Attacking at : " + target.localPosition.x + ", " + target.localPosition.y + " !");
+        Instantiate(_bullet, transform.position, transform.rotation, transform);
+        _nextAttack = Time.time + _attackDelay;
+    }
+
+    public void Hit(int prmDamage)
+    {
+        _lifePoints -= prmDamage;
+        if (_lifePoints <= 0)
         {
-            _path = p;
-            _currentWaypoint = 0;
+            Death();
         }
+    }
+
+    public void Death()
+    {
+        Debug.Log("Enemy Death");
     }
 }

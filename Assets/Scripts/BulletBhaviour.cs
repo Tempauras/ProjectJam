@@ -43,8 +43,11 @@ public class BulletBhaviour : MonoBehaviour
         {
             enemy.Hit(damage);
         }
-        Destroy(gameObject);
-        
+
+        if (!col.GetComponent<PlayerBehviour>())
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetDirection(Vector2 prmDirection)

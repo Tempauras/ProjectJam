@@ -1,6 +1,9 @@
+using System;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -11,11 +14,7 @@ public class BaseEnemy : MonoBehaviour
     [Header("AI Stuff")]
 
     public GameObject player;
-    private Seeker _seeker;
     private Rigidbody2D _rb;
-    private AIDestinationSetter _aiDestinationSetter;
-    private Patrol _patrol;
-    private AIPath _aiPath;
     [Header("Stats")]
     [SerializeField] private float _lifePoints;
     [SerializeField] private int _damage;
@@ -35,12 +34,7 @@ public class BaseEnemy : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = enemySprite[random];
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
-        _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
-        _aiDestinationSetter = GetComponent<AIDestinationSetter>();
-        _aiPath = GetComponent<AIPath>();
-        _patrol = GetComponent<Patrol>();
-        _aiPath.maxSpeed = _moveSpeed;
         InvokeRepeating("SeePlayer", 0f, 0.1f);
     }
 
@@ -48,6 +42,9 @@ public class BaseEnemy : MonoBehaviour
     void Update()
     {
         direction = (player.transform.position - transform.position).normalized;
+        Debug.Log(direction);
+        Debug.Log(_moveSpeed);
+        _rb.velocity = new Vector2(direction.x * _moveSpeed, _rb.velocity.y);
         if (direction.x <= 0 )
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -88,7 +85,6 @@ public class BaseEnemy : MonoBehaviour
 
     public void Attack()
     {
-        //Debug.Log("Attacking at : " + player.localPosition.x + ", " + player.localPosition.y + " !");
         GameObject projectileGameObject = (GameObject)Instantiate(_bullet, firePoint.transform.position, firePoint.transform.rotation);
         EnemyBulletBehaviour bullet = projectileGameObject.GetComponent<EnemyBulletBehaviour>();
         
@@ -116,7 +112,12 @@ public class BaseEnemy : MonoBehaviour
 
     public void Death()
     {
-        Debug.Log("Enemy Death");
-        Destroy(gameObject);
+        this.enabled = false;
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.AddToPool(TypeOfPool.ENEMY, gameObject);
     }
 }

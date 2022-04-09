@@ -4448,7 +4448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950514904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0055907, y: 2.5969915, z: -10}
+  m_LocalPosition: {x: -1.6987135, y: 2.5962322, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 276907262}
@@ -4798,14 +4798,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4863374281814296182, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4863374281814296182, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 5292f89bfa82a96469cdf8ed01dbd382, type: 2}
     - target: {fileID: 4863374281814296184, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -4854,17 +4846,21 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1950514906}
-    - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: rateOfFire
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
-      propertyPath: _whatIsGround.m_Bits
-      value: 448
-      objectReference: {fileID: 0}
     - target: {fileID: 4863374281814296186, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7487596672982580480, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
+      propertyPath: delayToSpawn
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7487596672982580480, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
+      propertyPath: radiusForSpawn
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7487596672982580480, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
+      propertyPath: mobToSpawnsPerSeconds
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}

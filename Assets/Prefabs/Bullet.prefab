@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  force: 10
-  travelDistance: 7
+  force: 20
+  travelDistance: 15
 --- !u!61 &6088906215925843988
 BoxCollider2D:
   m_ObjectHideFlags: 0

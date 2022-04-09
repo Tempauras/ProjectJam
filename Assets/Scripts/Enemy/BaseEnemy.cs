@@ -2,6 +2,7 @@ using System;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -14,7 +15,7 @@ public class BaseEnemy : MonoBehaviour
     [Header("AI Stuff")]
 
     public GameObject player;
-    private Rigidbody2D _rb;
+    public Rigidbody2D rb;
     [Header("Stats")]
     [SerializeField] private float _lifePoints;
     [SerializeField] private int _damage;
@@ -34,7 +35,7 @@ public class BaseEnemy : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = enemySprite[random];
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
-        _rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("SeePlayer", 0f, 0.1f);
     }
 
@@ -49,7 +50,7 @@ public class BaseEnemy : MonoBehaviour
     void Update()
     {
         direction = (player.transform.position - transform.position).normalized;
-        _rb.velocity = new Vector2(direction.x * _moveSpeed, _rb.velocity.y);
+        rb.velocity = new Vector2(direction.x * _moveSpeed, rb.velocity.y);
         if (direction.x <= 0 )
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);

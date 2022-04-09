@@ -4856,7 +4856,7 @@ PrefabInstance:
       objectReference: {fileID: 1950514906}
     - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
       propertyPath: rateOfFire
-      value: 0.07
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4863374281814296185, guid: 323d90d251b1c5348a8125b83cbd719f, type: 3}
       propertyPath: _whatIsGround.m_Bits

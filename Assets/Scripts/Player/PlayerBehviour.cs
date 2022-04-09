@@ -58,7 +58,7 @@ public class PlayerBehviour : MonoBehaviour
 
         if (prmValue.isPressed)
         {
-            InvokeRepeating(nameof(Shoot), 0f, rateOfFire);
+            InvokeRepeating(nameof(Burst), 0f, rateOfFire);
         }
         else
         {
@@ -90,6 +90,14 @@ public class PlayerBehviour : MonoBehaviour
         float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         bullet.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+    }
+
+    void Burst()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Shoot();
+        }
     }
     
     public void OnJump()

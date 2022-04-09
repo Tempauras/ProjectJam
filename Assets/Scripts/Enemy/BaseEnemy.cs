@@ -30,12 +30,19 @@ public class BaseEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int random = Random.Range(0, enemySprite.Length - 1);
+        int random = Random.Range(0, enemySprite.Length);
         GetComponent<SpriteRenderer>().sprite = enemySprite[random];
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
         _rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("SeePlayer", 0f, 0.1f);
+    }
+
+    private void OnEnable()
+    {
+        int random = Random.Range(0, enemySprite.Length);
+        GetComponent<SpriteRenderer>().sprite = enemySprite[random];
+        arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
     }
 
     // Update is called once per frame

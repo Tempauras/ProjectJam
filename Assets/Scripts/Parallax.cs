@@ -18,7 +18,7 @@ public class Parallax : MonoBehaviour
     void Update()
     {
         transform.Translate(new Vector3(-_playerBehviour._rigidbody.velocity.x/10000, 0, 0));
-        //Debug.Log(_playerBehviour._rigidbody.velocity.y);
+
     }
 
     

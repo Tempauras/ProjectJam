@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using Cinemachine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -13,11 +14,13 @@ public class PlayerBehviour : MonoBehaviour
     
     private float xAxis;
     private bool canJump = false;
+    private float shakeTimer;
 
 
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
     public Camera camera;
+    public CinemachineVirtualCamera CinemachineVirtualCamera;
     public int lifePoints;
     public int maxLifePoints;
     public int jumpHeight;
@@ -45,6 +48,13 @@ public class PlayerBehviour : MonoBehaviour
         }
 
         canJump = Mathf.Abs(_rigidbody.velocity.y) < 0.01f && _rigidbody.IsTouchingLayers(_whatIsGround);
+
+        shakeTimer -= Time.deltaTime;
+
+        if (shakeTimer<= 0f)
+        {
+            ShakeCamera(0f,0f);
+        }
     }
 
     public void OnMovement(InputValue prmInputValue)
@@ -92,12 +102,23 @@ public class PlayerBehviour : MonoBehaviour
         bullet.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
     }
 
+    void ShakeCamera(float prmIntensity, float time)
+    {
+        CinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
+            prmIntensity;
+
+        shakeTimer = time;
+    }
+
     void Burst()
     {
         for (int i = 0; i < 3; i++)
         {
             Shoot();
+            
+            
         }
+        ShakeCamera(5f, 0.1f);
     }
     
     public void OnJump()

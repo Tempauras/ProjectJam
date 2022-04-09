@@ -5,9 +5,12 @@ using UnityEngine.AI;
 public class BaseEnemy : MonoBehaviour
 {
     public GameObject firePoint;
+    public GameObject arms;
+    public Sprite[] enemySprite;
+    public Sprite[] enemyArmsSprite;
     [Header("AI Stuff")]
 
-    public Transform player;
+    public GameObject player;
     private Seeker _seeker;
     private Rigidbody2D _rb;
     private AIDestinationSetter _aiDestinationSetter;
@@ -28,6 +31,10 @@ public class BaseEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int random = Random.Range(0, enemySprite.Length - 1);
+        GetComponent<SpriteRenderer>().sprite = enemySprite[random];
+        arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
+        player = GameObject.FindGameObjectWithTag("Player");
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
         _aiDestinationSetter = GetComponent<AIDestinationSetter>();
@@ -40,14 +47,32 @@ public class BaseEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * lookAngle);
+        direction = (player.transform.position - transform.position).normalized;
+        if (direction.x <= 0 )
+        {
+            // transform.right = Vector2.left;
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            //arms.GetComponent<SpriteRenderer>().flipY = true;
+            //arms.GetComponent<SpriteRenderer>().flipX = true;
+            arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, -90) * direction);
+        }
+        else
+        {
+            // transform.right = Vector2.right;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            //arms.GetComponent<SpriteRenderer>().flipY = false;
+            //arms.GetComponent<SpriteRenderer>().flipX = false;
+            arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
+        }
+        // float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //arms.transform.rotation = Quaternion.Euler(Vector3.forward * lookAngle);
+        // arms.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
         Debug.Log(_shooting);
         if (_shooting)
         {
            
-            if (transform.localPosition.x - player.localPosition.x <= _range && 
-                transform.localPosition.y - player.localPosition.y <= _range &&
+            if (transform.localPosition.x - player.transform.localPosition.x <= _range && 
+                transform.localPosition.y - player.transform.localPosition.y <= _range &&
                 Time.time > _nextAttack)
             {
                 Attack();
@@ -57,7 +82,7 @@ public class BaseEnemy : MonoBehaviour
 
     public void SeePlayer()
     {
-        direction = (player.position - transform.position).normalized;
+        
         RaycastHit2D hit = Physics2D.Raycast(firePoint.transform.position, direction, 1000);
         Debug.DrawRay(firePoint.transform.position, direction, Color.blue, 1.0f);
         if (hit.collider == player.GetComponent<BoxCollider2D>())
@@ -96,7 +121,7 @@ public class BaseEnemy : MonoBehaviour
         bullet.travelDistance = _range;
         bullet.damage = _damage;
         
-        Vector2 destination = player.position;
+        Vector2 destination = player.transform.position;
 
         bullet.SetDirection(direction);
         float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

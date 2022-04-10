@@ -110,4 +110,19 @@ public class GameManager : MonoBehaviour
         obj.transform.rotation = newTransform.rotation;
         return obj;
     }
+
+
+    public void Kill()
+    {
+        foreach (var EP in EnemyPool)
+        {
+            foreach (var EBP in EnemyBulletPool)
+            {
+                EBP.SetActive(false);
+            }
+
+            EP.GetComponent<BaseEnemy>().player = null;
+           EP.SetActive(false);
+        }
+    }
 }

@@ -136,15 +136,15 @@ MonoBehaviour:
   - {fileID: 3721568786550863560, guid: c6f46eba9bac46145a113abea00c1a10, type: 3}
   - {fileID: 797021613520861573, guid: f209aec7b48e1264781431e28c033c44, type: 3}
   - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
-  - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
-  - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
-  - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
+  - {fileID: 5988851345780434985, guid: e17110640446d95489ee6e9eab4982e1, type: 3}
+  - {fileID: -4194085963055304246, guid: f914cf68b39900d4da9afcd0ecdec3ae, type: 3}
+  - {fileID: 7034176889683984596, guid: 8257bfb5516debd49bf355db23eab70b, type: 3}
   player: {fileID: 0}
   rb: {fileID: 0}
   _lifePoints: 5
   _damage: 1
-  _attackDelay: 0.5
-  _range: 15
+  _attackDelay: 1
+  _range: 100000
   _moveSpeed: 6
   knockBack: 0
   random: 0

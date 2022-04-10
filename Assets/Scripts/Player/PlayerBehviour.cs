@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Cinemachine;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -66,7 +67,7 @@ public class PlayerBehviour : MonoBehaviour
         {
             ShakeCamera(0f,0f);
             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
-                camera.transform.position.z);
+            camera.transform.position.z);
         }
         
         Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
@@ -95,10 +96,11 @@ public class PlayerBehviour : MonoBehaviour
 
     public void OnShoot(InputValue prmValue)
     {
-        GameObject projectileGameObject = GameManager.instance.SpawnFromPool(TypeOfPool.PLAYERBULLET, transform);
+        
 
         if (prmValue.isPressed)
         {
+            oldCamPosY = camera.transform.position.y;
             InvokeRepeating(nameof(Burst), 0f, rateOfFire);
         }
         else
@@ -108,7 +110,12 @@ public class PlayerBehviour : MonoBehaviour
             {
                 CancelInvoke();
             }
-            
+             ShakeCamera(0f,0f);
+             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
+                 camera.transform.position.z);
+             camera.transform.rotation = quaternion.identity;
+             
+
         }
     }
 
@@ -135,8 +142,6 @@ public class PlayerBehviour : MonoBehaviour
 
     void ShakeCamera(float prmIntensity, float time)
     {
-        Vector3 pos = camera.transform.position;
-        
         CinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
             prmIntensity;
 
@@ -150,17 +155,18 @@ public class PlayerBehviour : MonoBehaviour
         {
             Shoot();
         }
-
-        oldCamPosY = camera.transform.position.y;
-        ShakeCamera(5f, 0.1f);
-
-
-        if (explosion)
-        {
-            ShakeCamera(10f, 0.1f);
-            explosion = false;
-        }
-        else
+        
+        
+         if (explosion)
+         {
+             ShakeCamera(15f, 0.1f);
+             explosion = false;
+             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
+                 camera.transform.position.z);
+             camera.transform.rotation = quaternion.identity;
+             
+         }
+         else
         {
             ShakeCamera(1f, 0.1f);
         }

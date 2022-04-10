@@ -30,7 +30,7 @@ public class BaseEnemy : MonoBehaviour
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
-        InvokeRepeating("SeePlayer", 0f, 0.1f);
+        
     }
 
     private void OnEnable()
@@ -41,7 +41,7 @@ public class BaseEnemy : MonoBehaviour
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
-        InvokeRepeating("SeePlayer", 0f, 0.1f);
+        
     }
 
     // Update is called once per frame

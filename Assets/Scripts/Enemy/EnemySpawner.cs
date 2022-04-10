@@ -6,11 +6,15 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private float delayToSpawn;
 
-    [SerializeField] private int mobToSpawnsPerSeconds;
+    [SerializeField] private int mobToSpawnAtEachInterval;
+
+    [SerializeField] private float radius;
+
+    [SerializeField] private float interval;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnMob", delayToSpawn, 1.0f);
+        InvokeRepeating("SpawnMob", delayToSpawn, interval);
     }
 
     // Update is called once per frame
@@ -22,10 +26,11 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnMob()
     {
         Debug.Log("SPAWN");
-        for (int i = 0; i < mobToSpawnsPerSeconds; i++)
+        for (int i = 0; i < mobToSpawnAtEachInterval; i++)
         {
             GameObject clone = GameManager.instance.SpawnFromPool(TypeOfPool.ENEMY, transform);
-            clone.transform.position = transform.position;
+            clone.transform.position =
+                new Vector2(transform.position.x + Random.Range(-radius, radius), transform.position.y);
             clone.SetActive(true);
             clone.GetComponent<BaseEnemy>().enabled = true;
         }

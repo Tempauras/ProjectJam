@@ -17,12 +17,19 @@ public class PlayerBehviour : MonoBehaviour
     private float xAxis;
     private bool canJump = false;
     private float shakeTimer;
+
+    private Animator _animator;
+    private float oldCamPosY;
+
+
     public bool explosion = false;
 
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
     public Camera camera;
     public CinemachineVirtualCamera CinemachineVirtualCamera;
+    public GameObject firePoint;
+    public GameObject arms;
     public int lifePoints;
     public int maxLifePoints;
     public int jumpHeight;
@@ -33,6 +40,7 @@ public class PlayerBehviour : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         xAxis = 0;
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -41,11 +49,13 @@ public class PlayerBehviour : MonoBehaviour
         if (xAxis != 0)
         {
             _rigidbody.velocity = new Vector2(xAxis * moveSpeed, _rigidbody.velocity.y);
+            _animator.SetFloat("Velocity", Mathf.Abs(xAxis));
         }
 
         if (xAxis == 0)
         {
             _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
+            _animator.SetFloat("Velocity", Mathf.Abs(xAxis));
         }
 
         canJump = Mathf.Abs(_rigidbody.velocity.y) < 0.01f && _rigidbody.IsTouchingLayers(_whatIsGround);
@@ -55,7 +65,27 @@ public class PlayerBehviour : MonoBehaviour
         if (shakeTimer<= 0f)
         {
             ShakeCamera(0f,0f);
+            camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
+                camera.transform.position.z);
         }
+        
+        Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
+        
+        Vector2 direction = destination - new Vector2(transform.position.x, transform.position.y);
+        
+        if (direction.x <= 0)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            arms.transform.rotation =
+                Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, -90) * direction);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            arms.transform.rotation =
+                Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
+        }
+        
     }
 
     public void OnMovement(InputValue prmInputValue)
@@ -85,7 +115,7 @@ public class PlayerBehviour : MonoBehaviour
     public void Shoot()
     {
         GameObject projectileGameObject =
-            GameManager.instance.SpawnFromPool(TypeOfPool.PLAYERBULLET, transform);
+            GameManager.instance.SpawnFromPool(TypeOfPool.PLAYERBULLET, firePoint.transform);
         projectileGameObject.SetActive(true);
         BulletBhaviour bullet = projectileGameObject.GetComponent<BulletBhaviour>();
         bullet.enabled = true;
@@ -105,6 +135,8 @@ public class PlayerBehviour : MonoBehaviour
 
     void ShakeCamera(float prmIntensity, float time)
     {
+        Vector3 pos = camera.transform.position;
+        
         CinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
             prmIntensity;
 
@@ -119,6 +151,10 @@ public class PlayerBehviour : MonoBehaviour
             Shoot();
         }
 
+        oldCamPosY = camera.transform.position.y;
+        ShakeCamera(5f, 0.1f);
+
+
         if (explosion)
         {
             ShakeCamera(10f, 0.1f);
@@ -128,6 +164,7 @@ public class PlayerBehviour : MonoBehaviour
         {
             ShakeCamera(1f, 0.1f);
         }
+
     }
     
     public void OnJump()

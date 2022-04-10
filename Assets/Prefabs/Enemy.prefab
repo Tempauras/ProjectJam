@@ -142,13 +142,12 @@ MonoBehaviour:
   - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
   player: {fileID: 0}
   rb: {fileID: 0}
-  _lifePoints: 50
+  _lifePoints: 10
   _damage: 1
   _attackDelay: 0.5
   _range: 15
   _moveSpeed: 6
   knockBack: 0
-  _bullet: {fileID: 274261955216309333, guid: 07b9a196d6139ca409c31220aa6e7872, type: 3}
 --- !u!114 &7498987204164544460
 MonoBehaviour:
   m_ObjectHideFlags: 0

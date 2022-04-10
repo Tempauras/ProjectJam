@@ -21,8 +21,6 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] private int _moveSpeed;
     public bool knockBack = false;
     private float _nextAttack = 0.2f;
-    
-    private bool _shooting = false;
 
     private Vector2 direction;
 
@@ -66,16 +64,12 @@ public class BaseEnemy : MonoBehaviour
                 arms.transform.rotation =
                     Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
             }
-
-            if (_shooting)
-            {
-                if (transform.localPosition.x - player.transform.localPosition.x <= _range &&
-                    transform.localPosition.y - player.transform.localPosition.y <= _range &&
-                    Time.time > _nextAttack)
+            if (transform.localPosition.x - player.transform.localPosition.x <= _range &&
+                transform.localPosition.y - player.transform.localPosition.y <= _range &&
+                Time.time > _nextAttack)
                 {
                     Attack();
                 }
-            }
         }
         else
         {
@@ -91,21 +85,6 @@ public class BaseEnemy : MonoBehaviour
     public void Reset()
     {
         knockBack = false;
-    }
-
-    public void SeePlayer()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(firePoint.transform.position, direction, 1000);
-        Debug.DrawRay(firePoint.transform.position, direction, Color.blue, 1.0f);
-        if (hit.collider == player.GetComponent<BoxCollider2D>())
-        {
-            ChasePlayer();
-        }
-    }
-
-    public void ChasePlayer()
-    {
-        _shooting = true;
     }
 
     public void Attack()

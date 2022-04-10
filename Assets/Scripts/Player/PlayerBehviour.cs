@@ -132,7 +132,7 @@ public class PlayerBehviour : MonoBehaviour
         
         Vector2 direction = destination - new Vector2(transform.position.x, transform.position.y);
 
-        direction += new Vector2(Random.Range(-0.7f, 0.7f), Random.Range(-0.7f, 0.7f));
+        direction += new Vector2(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
         
         bullet.SetDirection(direction.normalized);
 

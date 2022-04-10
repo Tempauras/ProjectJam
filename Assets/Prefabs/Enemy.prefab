@@ -141,10 +141,10 @@ MonoBehaviour:
   - {fileID: 7034176889683984596, guid: 8257bfb5516debd49bf355db23eab70b, type: 3}
   player: {fileID: 0}
   rb: {fileID: 0}
-  _lifePoints: 5
+  _lifePoints: 2
   _damage: 1
-  _attackDelay: 1
-  _range: 100000
+  _attackDelay: 1.5
+  _range: 15
   _moveSpeed: 6
   knockBack: 0
   random: 0

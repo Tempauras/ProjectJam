@@ -29,7 +29,7 @@ public class PlayerBehviour : MonoBehaviour
     public Rigidbody2D _rigidbody;
     public Camera camera;
     public CinemachineVirtualCamera CinemachineVirtualCamera;
-    public AudioSource AudioSourceGunFire;
+    //public AudioSource AudioSourceGunFire;
     public GameObject firePoint;
     public GameObject arms;
     public int lifePoints;
@@ -152,7 +152,7 @@ public class PlayerBehviour : MonoBehaviour
 
     void Burst()
     {
-        AudioSourceGunFire.Play();
+        //AudioSourceGunFire.Play();
         for (int i = 0; i < 3; i++)
         {
             Shoot();

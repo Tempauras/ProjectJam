@@ -54,6 +54,7 @@ MonoBehaviour:
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 448
+  explosion: 0
   moveSpeed: 5
   _rigidbody: {fileID: 0}
   camera: {fileID: 0}
@@ -98,19 +99,19 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.116411865, y: -0.12136561}
+  m_Offset: {x: -0.17232898, y: -0.1173715}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.78, y: 2.834}
-    newSize: {x: 3.78, y: 2.834}
+    oldSize: {x: 3.15, y: 2.3616667}
+    newSize: {x: 3.15, y: 2.3616667}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0049535, y: 1.816713}
-  m_EdgeRadius: 0.02
+  m_Size: {x: 0.80524963, y: 1.5371276}
+  m_EdgeRadius: 0
 --- !u!114 &4863374281814296181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,8 +159,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayToSpawn: 5
-  mobToSpawnsPerSeconds: 1
-  radiusForSpawn: 20
+  mobToSpawnAtEachInterval: 0
+  radius: 0
+  interval: 0
 --- !u!95 &597354565
 Animator:
   serializedVersion: 3
@@ -218,13 +220,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.78, y: 2.834}
+  m_Size: {x: 3.15, y: 2.3616667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

@@ -7,8 +7,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float delayToSpawn;
 
     [SerializeField] private int mobToSpawnsPerSeconds;
-
-    [SerializeField] private float radiusForSpawn;
     // Start is called before the first frame update
     void Start()
     {

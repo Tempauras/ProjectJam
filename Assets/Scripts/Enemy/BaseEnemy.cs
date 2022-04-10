@@ -1,9 +1,4 @@
-using System;
-using Pathfinding;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class BaseEnemy : MonoBehaviour
@@ -120,6 +115,7 @@ public class BaseEnemy : MonoBehaviour
     {
         if ((int)Random.Range(1, 100) <= 10)
         {
+            player.GetComponent<PlayerBehviour>().explosion = true;
             GameObject clone = GameManager.instance.SpawnFromPool(TypeOfPool.EXPLOSION, transform);
             clone.SetActive(true);
             Explosion ekusuplosion = clone.GetComponent<Explosion>();
@@ -127,7 +123,6 @@ public class BaseEnemy : MonoBehaviour
         }
         this.enabled = false;
     }
-
     private void OnDisable()
     {
         GameManager.instance.AddToPool(TypeOfPool.ENEMY, gameObject);

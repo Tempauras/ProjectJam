@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -7,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class PlayerBehviour : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class PlayerBehviour : MonoBehaviour
     private float xAxis;
     private bool canJump = false;
     private float shakeTimer;
-
+    public bool explosion = false;
 
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
@@ -25,7 +27,6 @@ public class PlayerBehviour : MonoBehaviour
     public int maxLifePoints;
     public int jumpHeight;
     public float rateOfFire;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -110,13 +111,23 @@ public class PlayerBehviour : MonoBehaviour
         shakeTimer = time;
     }
 
+
     void Burst()
     {
         for (int i = 0; i < 3; i++)
         {
             Shoot();
         }
-        ShakeCamera(5f, 0.1f);
+
+        if (explosion)
+        {
+            ShakeCamera(10f, 0.1f);
+            explosion = false;
+        }
+        else
+        {
+            ShakeCamera(1f, 0.1f);
+        }
     }
     
     public void OnJump()

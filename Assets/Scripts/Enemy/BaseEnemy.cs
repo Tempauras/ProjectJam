@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class BaseEnemy : MonoBehaviour
@@ -24,19 +25,33 @@ public class BaseEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
-        random = Random.Range(0, enemyArmsSprite.Length);
-        _animator.SetInteger("random", random);
-        arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
-        player = GameObject.FindGameObjectWithTag("Player");
-        rb = GetComponent<Rigidbody2D>();
+        // if (SceneManager.GetActiveScene().buildIndex ==4)
+        // {
+        //     
+        // }
+        // _animator = GetComponent<Animator>();
+        // random = Random.Range(0, enemyArmsSprite.Length);
+        // _animator.SetInteger("random", random);
+        // arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
+        // player = GameObject.FindGameObjectWithTag("Player");
+        // rb = GetComponent<Rigidbody2D>();
         
     }
 
     private void OnEnable()
     {
         _animator = GetComponent<Animator>();
-        random = Random.Range(0, enemyArmsSprite.Length);
+        
+        if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            random = Random.Range(enemyArmsSprite.Length/2, enemyArmsSprite.Length);
+        }
+        else
+        {
+            random = Random.Range(0, enemyArmsSprite.Length/2);
+        }
+        
+        
         _animator.SetInteger("random", random);
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
@@ -47,7 +62,7 @@ public class BaseEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!knockBack)
+        if (!knockBack && player)
         {
             direction = (player.transform.position - transform.position).normalized;
             rb.velocity = new Vector2(direction.x * _moveSpeed, rb.velocity.y);
@@ -95,7 +110,15 @@ public class BaseEnemy : MonoBehaviour
        
         bullet.bulletSpeed = 10;
         bullet.travelDistance = _range;
-        bullet.damage = _damage;
+        if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            bullet.damage = _damage * 2;
+        }
+        else
+        {
+            bullet.damage = _damage;
+        }
+        
 
         Vector2 destination = player.transform.position;
 

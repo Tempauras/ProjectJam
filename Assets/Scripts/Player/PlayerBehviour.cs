@@ -189,12 +189,15 @@ public class PlayerBehviour : MonoBehaviour
         lifePoints -= prmDamage;
         if (lifePoints <= 0)
         {
+            Debug.Log("Death");
+            GameManager.instance.Kill();
             Death();
         }
     }
 
     private void Death()
     {
-        Debug.Log("Death");
+        
+        GetComponent<Menu>().MainMenu();
     }
 }

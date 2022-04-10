@@ -13,7 +13,8 @@ public class BulletBhaviour : MonoBehaviour
     public int travelDistance;
 
     private Rigidbody2D _rigidbody2D;
-    
+
+    private AudioSource _audioSource;
     private Vector2 direction;
     private Vector3 StartPos;
     // Start is called before the first frame update
@@ -21,7 +22,7 @@ public class BulletBhaviour : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         StartPos = transform.position;
-
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()

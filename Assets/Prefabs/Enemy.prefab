@@ -132,22 +132,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 3892322492904290124}
   arms: {fileID: 9054200188756727910}
-  enemySprite:
-  - {fileID: -7023235332777477710, guid: e1981f62ef3bb16469516b81d0c89f9e, type: 3}
-  - {fileID: -1871199732854995850, guid: 9a895b6766cf5354ba93615c12e08fab, type: 3}
-  - {fileID: 3749368132923841054, guid: 0882b7d6955d8eb448c447d688a22e12, type: 3}
   enemyArmsSprite:
   - {fileID: 3721568786550863560, guid: c6f46eba9bac46145a113abea00c1a10, type: 3}
   - {fileID: 797021613520861573, guid: f209aec7b48e1264781431e28c033c44, type: 3}
   - {fileID: 6791533465410893731, guid: 6a7ecb3917549d64c9ed9fb2c3c795eb, type: 3}
   player: {fileID: 0}
   rb: {fileID: 0}
-  _lifePoints: 10
+  _lifePoints: 5
   _damage: 1
   _attackDelay: 0.5
   _range: 15
   _moveSpeed: 6
   knockBack: 0
+  random: 0
 --- !u!50 &7498987204164544457
 Rigidbody2D:
   serializedVersion: 4

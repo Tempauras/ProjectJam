@@ -27,8 +27,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < mobToSpawnsPerSeconds; i++)
         {
             GameObject clone = GameManager.instance.SpawnFromPool(TypeOfPool.ENEMY, transform);
-            clone.transform.position = new Vector2(transform.position.x + Random.Range(radiusForSpawn/2, radiusForSpawn),
-                    transform.position.y + Random.Range(radiusForSpawn/2, radiusForSpawn));
+            clone.transform.position = transform.position;
             clone.SetActive(true);
             clone.GetComponent<BaseEnemy>().enabled = true;
         }

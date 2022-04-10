@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 3165297862417042887}
   - component: {fileID: 3165297862417042884}
   - component: {fileID: 6033650324858809149}
-  - component: {fileID: 4203747766236719678}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Contenaire
   m_TagString: BoundingBox
   m_Icon: {fileID: 0}
@@ -97,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004071474, y: 0.28708413}
+  m_Offset: {x: -0.004071474, y: -0.01781556}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -108,24 +107,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.63687277, y: 0.17139524}
+  m_Size: {x: 0.63687277, y: 0.7811946}
   m_EdgeRadius: 0
---- !u!251 &4203747766236719678
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165297862417042883}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 177.12
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1

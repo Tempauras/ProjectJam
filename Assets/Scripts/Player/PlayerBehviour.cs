@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Cinemachine;
+using TMPro;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -14,7 +15,7 @@ using Random = UnityEngine.Random;
 public class PlayerBehviour : MonoBehaviour
 {
     [SerializeField] LayerMask _whatIsGround;
-    
+
     private float xAxis;
     private bool canJump = false;
     private float shakeTimer;
@@ -25,15 +26,18 @@ public class PlayerBehviour : MonoBehaviour
 
     public bool explosion = false;
 
+    public TMP_Text TMPText;
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
     public Camera camera;
+
     public CinemachineVirtualCamera CinemachineVirtualCamera;
+
     //public AudioSource AudioSourceGunFire;
     public GameObject firePoint;
     public GameObject arms;
-    public int lifePoints;
-    public int maxLifePoints;
+    public float lifePoints;
+    public float maxLifePoints;
     public int jumpHeight;
     public float rateOfFire;
 
@@ -43,6 +47,11 @@ public class PlayerBehviour : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         xAxis = 0;
         _animator = GetComponent<Animator>();
+
+        int LifePercentage = Mathf.RoundToInt(lifePoints / maxLifePoints * 100);
+        
+
+        TMPText.SetText(LifePercentage.ToString() + '%');
     }
 
     // Update is called once per frame
@@ -64,17 +73,17 @@ public class PlayerBehviour : MonoBehaviour
 
         shakeTimer -= Time.deltaTime;
 
-        if (shakeTimer<= 0f)
+        if (shakeTimer <= 0f)
         {
-            ShakeCamera(0f,0f);
+            ShakeCamera(0f, 0f);
             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
-            camera.transform.position.z);
+                camera.transform.position.z);
         }
-        
+
         Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
-        
+
         Vector2 direction = destination - new Vector2(transform.position.x, transform.position.y);
-        
+
         if (direction.x <= 0)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -87,7 +96,6 @@ public class PlayerBehviour : MonoBehaviour
             arms.transform.rotation =
                 Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction);
         }
-        
     }
 
     public void OnMovement(InputValue prmInputValue)
@@ -97,8 +105,6 @@ public class PlayerBehviour : MonoBehaviour
 
     public void OnShoot(InputValue prmValue)
     {
-        
-
         if (prmValue.isPressed)
         {
             oldCamPosY = camera.transform.position.y;
@@ -111,12 +117,11 @@ public class PlayerBehviour : MonoBehaviour
             {
                 CancelInvoke();
             }
-             ShakeCamera(0f,0f);
-             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
-                 camera.transform.position.z);
-             camera.transform.rotation = quaternion.identity;
-             
 
+            ShakeCamera(0f, 0f);
+            camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
+                camera.transform.position.z);
+            camera.transform.rotation = quaternion.identity;
         }
     }
 
@@ -129,11 +134,11 @@ public class PlayerBehviour : MonoBehaviour
         bullet.enabled = true;
 
         Vector2 destination = camera.ScreenToWorldPoint(Input.mousePosition);
-        
+
         Vector2 direction = destination - new Vector2(transform.position.x, transform.position.y);
 
         direction += new Vector2(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
-        
+
         bullet.SetDirection(direction.normalized);
 
         float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -157,24 +162,22 @@ public class PlayerBehviour : MonoBehaviour
         {
             Shoot();
         }
-        
-        
-         if (explosion)
-         {
-             ShakeCamera(15f, 0.1f);
-             explosion = false;
-             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
-                 camera.transform.position.z);
-             camera.transform.rotation = quaternion.identity;
-             
-         }
-         else
+
+
+        if (explosion)
+        {
+            ShakeCamera(15f, 0.1f);
+            explosion = false;
+            camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
+                camera.transform.position.z);
+            camera.transform.rotation = quaternion.identity;
+        }
+        else
         {
             ShakeCamera(1f, 0.1f);
         }
-
     }
-    
+
     public void OnJump()
     {
         if (canJump)
@@ -193,11 +196,14 @@ public class PlayerBehviour : MonoBehaviour
             GameManager.instance.Kill();
             Death();
         }
+
+        int LifePercentage = Mathf.RoundToInt(lifePoints / maxLifePoints * 100);
+
+        TMPText.SetText(LifePercentage.ToString()+ '%');
     }
 
     private void Death()
     {
-        
         GetComponent<Menu>().MainMenu();
     }
 }

@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 8857912721499825470}
   - component: {fileID: 8857912721499825471}
   - component: {fileID: 8857912721499825468}
-  - component: {fileID: 1607716635372755004}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Caisse-chine
   m_TagString: BoundingBox
   m_Icon: {fileID: 0}
@@ -97,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.53075427}
+  m_Offset: {x: 0, y: 0.0044472218}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -108,24 +107,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.86, y: 0.22849143}
+  m_Size: {x: 1.86, y: 1.2811055}
   m_EdgeRadius: 0
---- !u!251 &1607716635372755004
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8857912721499825442}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 170.44
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1

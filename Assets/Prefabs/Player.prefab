@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _whatIsGround:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 1472
   explosion: 0
   moveSpeed: 5
   _rigidbody: {fileID: 0}
@@ -61,10 +61,10 @@ MonoBehaviour:
   CinemachineVirtualCamera: {fileID: 0}
   firePoint: {fileID: 7044477380020168467}
   arms: {fileID: 6094478369704939572}
-  lifePoints: 50
-  maxLifePoints: 100
+  lifePoints: 75
+  maxLifePoints: 75
   jumpHeight: 7
-  rateOfFire: 0.15
+  rateOfFire: 0.11
 --- !u!50 &4863374281814296182
 Rigidbody2D:
   serializedVersion: 4

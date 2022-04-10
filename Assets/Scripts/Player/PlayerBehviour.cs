@@ -30,9 +30,6 @@ public class PlayerBehviour : MonoBehaviour
     public int moveSpeed;
     public Rigidbody2D _rigidbody;
     public Camera camera;
-
-    public CinemachineVirtualCamera CinemachineVirtualCamera;
-
     //public AudioSource AudioSourceGunFire;
     public GameObject firePoint;
     public GameObject arms;
@@ -40,6 +37,9 @@ public class PlayerBehviour : MonoBehaviour
     public float maxLifePoints;
     public int jumpHeight;
     public float rateOfFire;
+
+    public CinemachineImpulseSource _screenShake;
+    public CinemachineImpulseSource _screenShakeHard;
 
     // Start is called before the first frame update
     void Start()
@@ -75,7 +75,6 @@ public class PlayerBehviour : MonoBehaviour
 
         if (shakeTimer <= 0f)
         {
-            ShakeCamera(0f, 0f);
             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
                 camera.transform.position.z);
         }
@@ -118,7 +117,6 @@ public class PlayerBehviour : MonoBehaviour
                 CancelInvoke();
             }
 
-            ShakeCamera(0f, 0f);
             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
                 camera.transform.position.z);
             camera.transform.rotation = quaternion.identity;
@@ -146,13 +144,14 @@ public class PlayerBehviour : MonoBehaviour
         bullet.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
     }
 
-    void ShakeCamera(float prmIntensity, float time)
-    {
-        CinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
-            prmIntensity;
-
-        shakeTimer = time;
-    }
+    // void ShakeCamera(float prmIntensity, float time)
+    // {
+    //     _screenShake.GenerateImpulse();
+    //     // CinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
+    //      //   prmIntensity;
+    //
+    //     shakeTimer = time;
+    // }
 
 
     void Burst()
@@ -166,7 +165,7 @@ public class PlayerBehviour : MonoBehaviour
 
         if (explosion)
         {
-            ShakeCamera(15f, 0.1f);
+            _screenShakeHard.GenerateImpulse();
             explosion = false;
             camera.transform.position = new Vector3(camera.transform.position.x, oldCamPosY,
                 camera.transform.position.z);
@@ -174,7 +173,7 @@ public class PlayerBehviour : MonoBehaviour
         }
         else
         {
-            ShakeCamera(1f, 0.1f);
+            _screenShake.GenerateImpulse();
         }
     }
 

@@ -19,6 +19,7 @@ public class BaseEnemy : MonoBehaviour
     public int random;
 
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     
     private Vector2 direction;
 
@@ -41,6 +42,7 @@ public class BaseEnemy : MonoBehaviour
     private void OnEnable()
     {
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         
         if (SceneManager.GetActiveScene().buildIndex == 4)
         {
@@ -131,11 +133,21 @@ public class BaseEnemy : MonoBehaviour
 
     public void Hit(int prmDamage)
     {
+        _spriteRenderer.color = Color.red;
+        arms.GetComponent<SpriteRenderer>().color = Color.red;
+        
         _lifePoints -= prmDamage;
         if (_lifePoints <= 0)
         {
             Death();
         }
+        Invoke(nameof(changeColor), 1.5f);
+    }
+
+    public void changeColor()
+    {
+        _spriteRenderer.color = Color.white;
+        arms.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public void Death()

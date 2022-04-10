@@ -1,5 +1,5 @@
 using System;
-using Pathfinding;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -10,7 +10,6 @@ public class BaseEnemy : MonoBehaviour
 {
     public GameObject firePoint;
     public GameObject arms;
-    public Sprite[] enemySprite;
     public Sprite[] enemyArmsSprite;
     [Header("AI Stuff")] public GameObject player;
     public Rigidbody2D rb;
@@ -21,14 +20,18 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] private int _moveSpeed;
     public bool knockBack = false;
     private float _nextAttack = 0.2f;
+    public int random;
 
+    private Animator _animator;
+    
     private Vector2 direction;
 
     // Start is called before the first frame update
     void Start()
     {
-        int random = Random.Range(0, enemySprite.Length);
-        GetComponent<SpriteRenderer>().sprite = enemySprite[random];
+        _animator = GetComponent<Animator>();
+        random = Random.Range(0, enemyArmsSprite.Length);
+        _animator.SetInteger("random", random);
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
@@ -37,8 +40,9 @@ public class BaseEnemy : MonoBehaviour
 
     private void OnEnable()
     {
-        int random = Random.Range(0, enemySprite.Length);
-        GetComponent<SpriteRenderer>().sprite = enemySprite[random];
+        _animator = GetComponent<Animator>();
+        random = Random.Range(0, enemyArmsSprite.Length);
+        _animator.SetInteger("random", random);
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();

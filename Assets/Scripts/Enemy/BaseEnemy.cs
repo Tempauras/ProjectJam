@@ -23,9 +23,8 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] private int _range;
     [SerializeField] private int _moveSpeed;
     private float _nextAttack = 0.2f;
-
+    
     private bool _shooting = false;
-    [SerializeField] private Object _bullet;
 
     private Vector2 direction;
     // Start is called before the first frame update
@@ -44,6 +43,9 @@ public class BaseEnemy : MonoBehaviour
         int random = Random.Range(0, enemySprite.Length);
         GetComponent<SpriteRenderer>().sprite = enemySprite[random];
         arms.GetComponent<SpriteRenderer>().sprite = enemyArmsSprite[random];
+        player = GameObject.FindGameObjectWithTag("Player");
+        rb = GetComponent<Rigidbody2D>();
+        InvokeRepeating("SeePlayer", 0f, 0.1f);
     }
 
     // Update is called once per frame
@@ -96,8 +98,11 @@ public class BaseEnemy : MonoBehaviour
 
     public void Attack()
     {
-        GameObject projectileGameObject = (GameObject)Instantiate(_bullet, firePoint.transform.position, firePoint.transform.rotation);
+        
+        GameObject projectileGameObject = GameManager.instance.SpawnFromPool(TypeOfPool.ENEMYBULLET, firePoint.transform);
+        projectileGameObject.SetActive(true);
         EnemyBulletBehaviour bullet = projectileGameObject.GetComponent<EnemyBulletBehaviour>();
+        bullet.enabled = true;
         
         bullet.bulletSpeed = 10;
         bullet.travelDistance = _range;
@@ -123,6 +128,13 @@ public class BaseEnemy : MonoBehaviour
 
     public void Death()
     {
+        if ((int)Random.Range(1, 100) <= 10)
+        {
+            GameObject clone = GameManager.instance.SpawnFromPool(TypeOfPool.EXPLOSION, transform);
+            clone.SetActive(true);
+            Explosion ekusuplosion = clone.GetComponent<Explosion>();
+            ekusuplosion.enabled = true;
+        }
         this.enabled = false;
     }
 

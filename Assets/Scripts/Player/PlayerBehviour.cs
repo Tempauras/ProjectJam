@@ -115,8 +115,6 @@ public class PlayerBehviour : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             Shoot();
-            
-            
         }
         ShakeCamera(5f, 0.1f);
     }

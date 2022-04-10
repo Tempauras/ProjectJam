@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour
                 break;
             case TypeOfPool.PLAYERBULLET :
                 PlayerBulletPool.Enqueue(obj);
-                Debug.Log(PlayerBulletPool.Count);
                 break;
             case TypeOfPool.EXPLOSION :
                 ExplosionPool.Enqueue(obj);
@@ -98,11 +97,13 @@ public class GameManager : MonoBehaviour
                 obj = EnemyPool.Dequeue();
                 break;
             case TypeOfPool.ENEMYBULLET :
+                obj = EnemyBulletPool.Dequeue();
                 break;
             case TypeOfPool.PLAYERBULLET :
                 obj = PlayerBulletPool.Dequeue();
                 break;
             case TypeOfPool.EXPLOSION :
+                obj = ExplosionPool.Dequeue();
                 break;
         }
         obj.transform.position = newTransform.position;

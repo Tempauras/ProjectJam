@@ -8,6 +8,7 @@ public class BulletBhaviour : MonoBehaviour
 
     public int damage;
     public int force;
+    public int knockBackForce;
     
     public int travelDistance;
 
@@ -46,8 +47,8 @@ public class BulletBhaviour : MonoBehaviour
 
         if (enemy)
         {
-            Vector2 bulletDirection = (transform.position - enemy.transform.position).normalized;
-            enemy.rb.AddForce(-direction * force * 100);
+            enemy.knockBack = true;
+            enemy.rb.AddForce(new Vector2(direction.x, direction.y)*knockBackForce, ForceMode2D.Impulse);
             enemy.Hit(damage);
             enabled = false;
         }
